@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anagrafica</title>
+</head>
+<body>
+    <h1>Anagrafica</h1>
+
+    <p>
+        Nome: <input type="text" id="nome" size="6">
+        <br><br>
+
+        Cognome: <input type="text" id="cognome" size="6">
+        <br><br>
+
+        Età: <input type="number" id="eta">
+        <br><br>
+
+        Sesso:
+        <br>
+        <input type="radio" name="sesso" value="M"> M
+        <br>
+        <input type="radio" name="sesso" value="F"> F
+        <br>
+        <input type="radio" name="sesso" value="Altro"> Altro
+        <br><br>
+
+        Indirizzo: <input type="text" id="indirizzo">
+        <br><br>
+
+        Città: <input type="text" id="citta">
+        <br><br>
+
+        Provincia:
+        <select id="prov">
+            <option value="">Select</option>
+            <option value="Milano">Milano</option>
+            <option value="Firenze">Firenze</option>
+        </select>
+        <br><br>
+
+        Sport:
+        <br>
+        <input type="checkbox" name="sport" value="Calcio">
+        <label>Calcio</label>
+        <br>
+
+        <input type="checkbox" name="sport" value="Pallavolo">
+        <label>Pallavolo</label>
+        <br>
+
+        <input type="checkbox" name="sport" value="Basket">
+        <label>Basket</label>
+        <br>
+
+        <input type="checkbox" name="sport" value="Nessuno sport">
+        <label>Nessuno sport</label>
+        <br><br>
+
+        Commenti:
+        <br>
+        <textarea id="commenti" rows="4" cols="50" placeholder="Inserisci i commenti qui"></textarea>
+
+    </p>
+
+    <button type="button" onclick="stampaDati()">
+        Inserisci dati
+    </button>
+
+    <br><br>
+
+    <table border="1" id="tabella" style="display: none;">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Età</th>
+                <th>Sesso</th>
+                <th>Indirizzo</th>
+                <th>Città</th>
+                <th>Provincia</th>
+                <th>Sport</th>
+                <th>Commenti</th>
+            </tr>
+        </thead>
+
+        <tbody id="risultato">
+        </tbody>
+    </table>
+
+    <script src="index.js"></script>
+
+</body>
+</html>
