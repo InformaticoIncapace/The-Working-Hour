@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Registro voti · Report</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #11131b; --panel: #1a1e2b; --panel2: #202637;
+  --text: #edf0f7; --muted: #929bb0; --line: #30384b;
+  --green: #55d6a0; --orange: #ffb454; --red: #ff6b78;
+  --accent: #a99bff;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 42px 20px 60px; background:
+  radial-gradient(ellipse at 12% 0%, #292447 0, transparent 38%),
+  radial-gradient(ellipse at 100% 15%, #183c43 0, transparent 30%), var(--bg);
+  color: var(--text); font: 15px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
+}
+main { max-width: 1050px; margin: auto; }
+header { margin-bottom: 28px; }
+.eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: .16em; font-size: 11px; font-weight: 800; }
+h1 { margin: 8px 0 4px; font-size: clamp(30px, 5vw, 44px); letter-spacing: -.04em; }
+.subtitle { color: var(--muted); }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 6px; }
+.tab { background: var(--panel); border: 1px solid var(--line); color: var(--muted); padding: 9px 18px;
+  border-radius: 999px; cursor: pointer; font: inherit; font-weight: 700; }
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--text); border-color: var(--accent); background: var(--panel2); }
+.view { display: none; }
+.view.active { display: block; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 25px 0; }
+.card { background: linear-gradient(145deg, #22283a, #191e2b); border: 1px solid var(--line); border-radius: 17px; padding: 19px 20px; }
+.card-label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .09em; }
+.card-value { font-size: 32px; font-weight: 800; letter-spacing: -.04em; margin-top: 4px; }
+.green { color: var(--green); } .orange { color: var(--orange); } .red { color: var(--red); }
+.panel { background: rgba(26,30,43,.94); border: 1px solid var(--line); border-radius: 18px; padding: 22px; margin-top: 18px; overflow: hidden; }
+.panel-head { display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom: 12px; }
+h2 { font-size: 18px; margin: 0; letter-spacing: -.02em; }
+.hint { color: var(--muted); font-size: 12px; }
+table { width:100%; border-collapse: collapse; text-align:left; }
+th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .09em; font-weight:700; }
+th, td { padding: 12px 10px; border-bottom: 1px solid var(--line); }
+tbody tr:last-child td { border-bottom: 0; }
+.subject { font-weight: 700; min-width: 170px; }
+.average { font-variant-numeric: tabular-nums; font-weight: 800; width: 85px; }
+.grade { font-size: 19px; font-weight: 850; font-variant-numeric: tabular-nums; }
+.grade.small { font-size: 14px; }
+.muted, .details { color: var(--muted); }
+.details { font-size: 12px; white-space: nowrap; }
+.progress { width: 30%; }
+.bar-track { height: 7px; border-radius: 20px; background: #30384b; overflow:hidden; }
+.bar { height:100%; border-radius:20px; }
+.bar.green { background:var(--green); } .bar.orange { background:var(--orange); } .bar.red { background:var(--red); }
+.empty { color:var(--muted); text-align:center; padding:25px; }
+.legend { display:flex; gap:16px; flex-wrap:wrap; margin-top:14px; color:var(--muted); font-size:12px; }
+.dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+footer { color:var(--muted); text-align:center; margin-top:24px; font-size:12px; }
+@media (max-width:700px) {
+ body { padding:25px 12px; } .cards { grid-template-columns:1fr; gap:9px; }
+ .card { padding:14px 17px; } .card-value { font-size:26px; }
+ .panel { padding:14px 10px; } th,td { padding:10px 6px; }
+ .details { display:none; } .progress { width:35%; } .subject { min-width:125px; }
+}
+@media print {
+ body { background:white; color:#151923; padding:0; }
+ .panel,.card { background:white; border:1px solid #ddd; }
+ .muted,.details,.subtitle,.hint,footer { color:#555; }
+ .tabs { display:none; }
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="eyebrow">Academic dashboard</div>
+  <h1>Il mio registro voti</h1>
+  <div class="subtitle">Riepilogo aggiornato al 10-11-2026 · 14 voti archiviati</div>
+</header>
+<div class="tabs"><button class="tab active" data-view="trimestre">Trimestre</button><button class="tab" data-view="pentamestre">Pentamestre</button><button class="tab" data-view="anno">Anno intero</button></div>
+
+<div class="view active" id="view-trimestre">
+<section class="cards">
+  <div class="card"><div class="card-label">Media complessiva ponderata</div>
+    <div class="card-value green">7.68</div></div>
+  <div class="card"><div class="card-label">Voti registrati</div>
+    <div class="card-value">14</div></div>
+  <div class="card"><div class="card-label">Materie con voti</div>
+    <div class="card-value">9 <span class="muted" style="font-size:16px">/ 11</span></div></div>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h2>Medie per materia · Trimestre</h2><span class="hint">Ordine alfabetico · media ponderata</span></div>
+  <table>
+    <thead><tr><th>Materia</th><th>Media</th><th>Andamento</th><th>Dettagli</th></tr></thead>
+    <tbody><tr><td class='subject'>Educazione (Ed.) Civica</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>Informatica</td><td class='average'><span class="grade green">9.00</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:90.00%"></div></div></td><td class='details'>1 voti · peso complessivo 100</td></tr><tr><td class='subject'>Inglese</td><td class='average'><span class="grade green">8.50</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:85.00%"></div></div></td><td class='details'>1 voti · peso complessivo 100</td></tr><tr><td class='subject'>Italiano</td><td class='average'><span class="grade green">7.25</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:72.50%"></div></div></td><td class='details'>2 voti · peso complessivo 200</td></tr><tr><td class='subject'>Matematica</td><td class='average'><span class="grade green">8.50</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:85.00%"></div></div></td><td class='details'>1 voti · peso complessivo 100</td></tr><tr><td class='subject'>Palestra</td><td class='average'><span class="grade green">6.75</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:67.50%"></div></div></td><td class='details'>2 voti · peso complessivo 200</td></tr><tr><td class='subject'>Religione</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>Sistemi</td><td class='average'><span class="grade green">7.12</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:71.25%"></div></div></td><td class='details'>2 voti · peso complessivo 200</td></tr><tr><td class='subject'>Storia</td><td class='average'><span class="grade green">6.00</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:60.00%"></div></div></td><td class='details'>1 voti · peso complessivo 100</td></tr><tr><td class='subject'>TLC</td><td class='average'><span class="grade green">8.88</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:88.75%"></div></div></td><td class='details'>2 voti · peso complessivo 200</td></tr><tr><td class='subject'>TPS</td><td class='average'><span class="grade green">7.75</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:77.50%"></div></div></td><td class='details'>2 voti · peso complessivo 200</td></tr></tbody>
+  </table>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--green)"></i>6 o più</span>
+    <span><i class="dot" style="background:var(--orange)"></i>da 5 a meno di 6</span>
+    <span><i class="dot" style="background:var(--red)"></i>meno di 5</span>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h2>Storico voti</h2><span class="hint">Dal più recente</span></div>
+  <table>
+    <thead><tr><th>Data</th><th>Materia</th><th>Voto</th><th>Peso</th></tr></thead>
+    <tbody><tr><td>10-11-2026</td><td>TLC</td><td><span class='grade small green'>10.00</span></td><td>100</td></tr>
+<tr><td>04-11-2026</td><td>TPS</td><td><span class='grade small green'>8.00</span></td><td>100</td></tr>
+<tr><td>04-11-2026</td><td>TLC</td><td><span class='grade small green'>7.75</span></td><td>100</td></tr>
+<tr><td>29-10-2026</td><td>Sistemi</td><td><span class='grade small green'>6.75</span></td><td>100</td></tr>
+<tr><td>23-10-2026</td><td>Storia</td><td><span class='grade small green'>6.00</span></td><td>100</td></tr>
+<tr><td>22-10-2026</td><td>Palestra</td><td><span class='grade small green'>7.50</span></td><td>100</td></tr>
+<tr><td>21-10-2026</td><td>Informatica</td><td><span class='grade small green'>9.00</span></td><td>100</td></tr>
+<tr><td>20-10-2026</td><td>Italiano</td><td><span class='grade small green'>6.50</span></td><td>100</td></tr>
+<tr><td>19-10-2026</td><td>TPS</td><td><span class='grade small green'>7.50</span></td><td>100</td></tr>
+<tr><td>15-10-2026</td><td>Palestra</td><td><span class='grade small green'>6.00</span></td><td>100</td></tr>
+<tr><td>07-10-2026</td><td>Sistemi</td><td><span class='grade small green'>7.50</span></td><td>100</td></tr>
+<tr><td>02-10-2026</td><td>Matematica</td><td><span class='grade small green'>8.50</span></td><td>100</td></tr>
+<tr><td>30-09-2026</td><td>Inglese</td><td><span class='grade small green'>8.50</span></td><td>100</td></tr>
+<tr><td>29-09-2026</td><td>Italiano</td><td><span class='grade small green'>8.00</span></td><td>100</td></tr></tbody>
+  </table>
+</section>
+</div>
+
+<div class="view" id="view-pentamestre">
+<section class="cards">
+  <div class="card"><div class="card-label">Media complessiva ponderata</div>
+    <div class="card-value ">—</div></div>
+  <div class="card"><div class="card-label">Voti registrati</div>
+    <div class="card-value">0</div></div>
+  <div class="card"><div class="card-label">Materie con voti</div>
+    <div class="card-value">0 <span class="muted" style="font-size:16px">/ 11</span></div></div>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h2>Medie per materia · Pentamestre</h2><span class="hint">Ordine alfabetico · media ponderata</span></div>
+  <table>
+    <thead><tr><th>Materia</th><th>Media</th><th>Andamento</th><th>Dettagli</th></tr></thead>
+    <tbody><tr><td class='subject'>Educazione (Ed.) Civica</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>Informatica</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>Inglese</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>Italiano</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>Matematica</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>Palestra</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>Religione</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>Sistemi</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>Storia</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>TLC</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>TPS</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr></tbody>
+  </table>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--green)"></i>6 o più</span>
+    <span><i class="dot" style="background:var(--orange)"></i>da 5 a meno di 6</span>
+    <span><i class="dot" style="background:var(--red)"></i>meno di 5</span>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h2>Storico voti</h2><span class="hint">Dal più recente</span></div>
+  <table>
+    <thead><tr><th>Data</th><th>Materia</th><th>Voto</th><th>Peso</th></tr></thead>
+    <tbody><tr><td colspan='4' class='empty'>Nessun voto in questo periodo.</td></tr></tbody>
+  </table>
+</section>
+</div>
+
+<div class="view" id="view-anno">
+<section class="cards">
+  <div class="card"><div class="card-label">Media complessiva ponderata</div>
+    <div class="card-value green">7.68</div></div>
+  <div class="card"><div class="card-label">Voti registrati</div>
+    <div class="card-value">14</div></div>
+  <div class="card"><div class="card-label">Materie con voti</div>
+    <div class="card-value">9 <span class="muted" style="font-size:16px">/ 11</span></div></div>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h2>Medie per materia · Anno intero</h2><span class="hint">Ordine alfabetico · media ponderata</span></div>
+  <table>
+    <thead><tr><th>Materia</th><th>Media</th><th>Andamento</th><th>Dettagli</th></tr></thead>
+    <tbody><tr><td class='subject'>Educazione (Ed.) Civica</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>Informatica</td><td class='average'><span class="grade green">9.00</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:90.00%"></div></div></td><td class='details'>1 voti · peso complessivo 100</td></tr><tr><td class='subject'>Inglese</td><td class='average'><span class="grade green">8.50</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:85.00%"></div></div></td><td class='details'>1 voti · peso complessivo 100</td></tr><tr><td class='subject'>Italiano</td><td class='average'><span class="grade green">7.25</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:72.50%"></div></div></td><td class='details'>2 voti · peso complessivo 200</td></tr><tr><td class='subject'>Matematica</td><td class='average'><span class="grade green">8.50</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:85.00%"></div></div></td><td class='details'>1 voti · peso complessivo 100</td></tr><tr><td class='subject'>Palestra</td><td class='average'><span class="grade green">6.75</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:67.50%"></div></div></td><td class='details'>2 voti · peso complessivo 200</td></tr><tr><td class='subject'>Religione</td><td class='average'><span class="muted">—</span></td><td class='progress'></td><td class='details'>Nessun voto inserito</td></tr><tr><td class='subject'>Sistemi</td><td class='average'><span class="grade green">7.12</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:71.25%"></div></div></td><td class='details'>2 voti · peso complessivo 200</td></tr><tr><td class='subject'>Storia</td><td class='average'><span class="grade green">6.00</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:60.00%"></div></div></td><td class='details'>1 voti · peso complessivo 100</td></tr><tr><td class='subject'>TLC</td><td class='average'><span class="grade green">8.88</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:88.75%"></div></div></td><td class='details'>2 voti · peso complessivo 200</td></tr><tr><td class='subject'>TPS</td><td class='average'><span class="grade green">7.75</span></td><td class='progress'><div class="bar-track"><div class="bar green" style="width:77.50%"></div></div></td><td class='details'>2 voti · peso complessivo 200</td></tr></tbody>
+  </table>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--green)"></i>6 o più</span>
+    <span><i class="dot" style="background:var(--orange)"></i>da 5 a meno di 6</span>
+    <span><i class="dot" style="background:var(--red)"></i>meno di 5</span>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h2>Storico voti</h2><span class="hint">Dal più recente</span></div>
+  <table>
+    <thead><tr><th>Data</th><th>Materia</th><th>Voto</th><th>Peso</th><th>Periodo</th></tr></thead>
+    <tbody><tr><td>10-11-2026</td><td>TLC</td><td><span class='grade small green'>10.00</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>04-11-2026</td><td>TPS</td><td><span class='grade small green'>8.00</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>04-11-2026</td><td>TLC</td><td><span class='grade small green'>7.75</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>29-10-2026</td><td>Sistemi</td><td><span class='grade small green'>6.75</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>23-10-2026</td><td>Storia</td><td><span class='grade small green'>6.00</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>22-10-2026</td><td>Palestra</td><td><span class='grade small green'>7.50</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>21-10-2026</td><td>Informatica</td><td><span class='grade small green'>9.00</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>20-10-2026</td><td>Italiano</td><td><span class='grade small green'>6.50</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>19-10-2026</td><td>TPS</td><td><span class='grade small green'>7.50</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>15-10-2026</td><td>Palestra</td><td><span class='grade small green'>6.00</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>07-10-2026</td><td>Sistemi</td><td><span class='grade small green'>7.50</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>02-10-2026</td><td>Matematica</td><td><span class='grade small green'>8.50</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>30-09-2026</td><td>Inglese</td><td><span class='grade small green'>8.50</span></td><td>100</td><td>Trimestre</td></tr>
+<tr><td>29-09-2026</td><td>Italiano</td><td><span class='grade small green'>8.00</span></td><td>100</td><td>Trimestre</td></tr></tbody>
+  </table>
+</section>
+</div>
+
+<footer>I dati originali sono conservati in voti.csv · Questo report viene rigenerato a ogni avvio.</footer>
+</main>
+<script>
+document.querySelectorAll('.tab').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.tab, .view').forEach(function (e) { e.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('view-' + btn.dataset.view).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
